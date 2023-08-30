@@ -9,7 +9,7 @@ import Header from './component/Header';
 import Store from './Store';
 import Init from './pages/Init';
 import OnInit from './pages/OnInit';
-
+import Login from './pages/LoginPage/LoginPage'
 
 import {
   BrowserRouter as Router,
@@ -35,6 +35,7 @@ import Graph from './pages/Graph';
 import CombineCsv from './pages/CombineCsv';
 
 function App() {
+
   return (
     <Store className="App">
       <Header />
@@ -43,6 +44,9 @@ function App() {
           <Switch>
             <Route path="/graph">
               <Graph />
+            </Route>
+            <Route path='/login'>
+              <Login />
             </Route>
             <Route path="/onsupport">
               <OnSupport />
