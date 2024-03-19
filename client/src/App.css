@@ -108,6 +108,13 @@
     margin-top: 30px !important;
 } */
 
+.auth-btn {
+    margin: 10px;
+}
+
+.oauth2 {
+    margin: 5px;
+}
 
 /* check box */
 

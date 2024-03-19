@@ -67,10 +67,6 @@ export default function Home() {
         setstate({...state,userInfo:{...state.userInfo,agree:e.target.checked}})
     }
 
-    const handleGoogleOAuth = () => {
-        window.location.href = 'http://localhost:8000/api/v1/auth/google';
-    }
-
     return (
         <div className="home">
             <Card className="user-info-card">
@@ -101,9 +97,6 @@ export default function Home() {
                 </div>
                 <Button className="home-btn" variant="outlined" onClick={onButtonClick} >
                     proceed
-                </Button>
-                <Button className="home-btn" variant="outlined" onClick={handleGoogleOAuth}> 
-                    Continue with Google 
                 </Button>
                 {error ? <div className="error-text">{errorMsg}</div> : ''}
             </Card>

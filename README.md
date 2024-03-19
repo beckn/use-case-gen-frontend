@@ -49,3 +49,11 @@ To run this project, you will need to add the following environment variables to
 `GOOGLE_CLIENT_SECRET`
 
 `MONGO_URI`
+
+`FACEBOOK_APP_ID`
+
+`FACEBOOK_APP_SECRET`
+
+`GITHUB_CLIENT_ID`
+
+`GITHUB_CLIENT_SECRET`
