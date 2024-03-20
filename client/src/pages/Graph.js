@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useMemo } from 'react';
 import { Context } from '../Store';
 import ReactFlow from 'react-flow-renderer';
 import Button from '@material-ui/core/Button';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import InfoBox from '../component/InfoBox';
@@ -17,7 +17,7 @@ const redClr = ["status", "on_status", "track", "on_track", "update", "on_update
 const grayClr = ["rating", "on_rating", "support", "on_support"];
 
 export default function Graph() {
-    let history = useHistory();
+    let history = useNavigate();
     const [state, setState] = useContext(Context);
     const [graphData, setgraphData] = useState([]);
     const [iKey, setiKey] = useState(0);

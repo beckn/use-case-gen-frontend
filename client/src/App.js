@@ -14,6 +14,7 @@ import OnInit from './pages/OnInit';
 import {
   BrowserRouter as Router,
   Switch,
+  Routes,
   Route,
   Link
 } from "react-router-dom";
@@ -40,77 +41,31 @@ function App() {
       <Header />
       <Router>
         <div>
-          <Switch>
-            <Route path="/graph">
-              <Graph />
-            </Route>
-            <Route path="/onsupport">
-              <OnSupport />
-            </Route>
-            <Route path="/support">
-              <Support />
-            </Route>
-            <Route path="/onrating">
-              <OnRating />
-            </Route>
-            <Route path="/rating">
-              <Rating />
-            </Route>
-            <Route path="/oncancel">
-              <OnCancel />
-            </Route>
-            <Route path="/cancel">
-              <Cancel />
-            </Route>
-            <Route path="/onupdate">
-              <OnUpdate />
-            </Route>
-            <Route path="/update">
-              <Update />
-            </Route>
-            <Route path="/ontrack">
-              <OnTrack />
-            </Route>
-            <Route path="/track">
-              <Track />
-            </Route>
-            <Route path="/onstatus">
-              <OnStatus />
-            </Route>
-            <Route path="/status">
-              <Status />
-            </Route>
-            <Route path="/onconfirm">
-              <OnConfirm />
-            </Route>
-            <Route path="/confirm">
-              <Confirm />
-            </Route>
-            <Route path="/oninit">
-              <OnInit />
-            </Route>
-            <Route path="/init">
-              <Init />
-            </Route>
-            <Route path="/onselect">
-              <OnSelect />
-            </Route>
-            <Route path="/select">
-              <Select />
-            </Route>
-            <Route path="/onsearch">
-              <OnSearch />
-            </Route>
-            <Route path="/search">
-              <Search />
-            </Route>
-            <Route path="/combine">
-              <CombineCsv/>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/graph" element={<Graph />} />
+            <Route path="/onsupport" element={<OnSupport />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/onrating" element={<OnRating />} />
+            <Route path="/rating" element={<Rating />} />
+            <Route path="/oncancel" element={<OnCancel />} />
+            <Route path="/cancel" element={<Cancel />} />
+            <Route path="/onupdate" element={<OnUpdate />} />
+            <Route path="/update" element={<Update />} />
+            <Route path="/ontrack" element={<OnTrack />} />
+            <Route path="/track" element={<Track />} />
+            <Route path="/onstatus" element={<OnStatus />} />
+            <Route path="/status" element={<Status />} />
+            <Route path="/onconfirm" element={<OnConfirm />} />
+            <Route path="/confirm" element={<Confirm />} />
+            <Route path="/oninit" element={<OnInit />} /> 
+            <Route path="/init" element={<Init />} />
+            <Route path="/onselect" element={<OnSelect />} />
+            <Route path="/select" element={<Select />} />
+            <Route path="/onsearch" element={<OnSearch />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/combine" element={<CombineCsv/>} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         </div>
       </Router>
     </Store>

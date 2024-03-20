@@ -7,12 +7,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import InfoBox from '../component/InfoBox';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from 'axios';
 
 export default function Home() {
-    let history = useHistory();
+    let history = useNavigate();
     const [state, setstate] = useContext(Context);
     const [error, seterror] = useState(false)
     const [errorMsg, seterrorMsg] = useState('')
@@ -67,6 +68,36 @@ export default function Home() {
         setstate({...state,userInfo:{...state.userInfo,agree:e.target.checked}})
     }
 
+    const handleGoogleOAuth = () => {
+        window.open('http://localhost:8000/api/v1/auth/google/callback', '_self');
+    }
+
+    const handleFacebookOAuth = () => {
+        window.location.href = 'http://localhost:8000/api/v1/auth/facebook';
+    }
+
+    const handleGithubOAuth = () => {
+        window.location.href = 'http://localhost:8000/api/v1/auth/github';
+    }
+
+    const signup = async () => {
+        try {
+            // Assuming state.userInfo contains the necessary user information
+            const { data } = await axios.post('http://localhost:8000/api/v1/auth/signup', state.userInfo);
+
+            if (data.success) {
+                localStorage.setItem('userInfo', JSON.stringify(data.data.doc));
+                // Assuming you have history object available and properly configured
+                history('/search');
+                console.log("User signed up successfully!"); // Log success
+            } else {
+                console.error("Signup failed:", data.message); // Log failure message
+            }
+        } catch (error) {
+            console.error("Error during signup:", error); // Log error
+        }
+    };
+
     return (
         <div className="home">
             <Card className="user-info-card">
@@ -95,8 +126,18 @@ export default function Home() {
                     />
                     <a href="https://beckn.org/code-of-sharing/" target="_blank">I agree to the code of sharing</a>
                 </div>
-                <Button className="home-btn" variant="outlined" onClick={onButtonClick} >
+                <Button className="home-btn" variant="outlined" onClick={signup} >
                     proceed
+                </Button>
+                <div>or</div>
+                <Button className="auth-btn" variant="outlined" onClick={handleGoogleOAuth}> 
+                    Continue with Google 
+                </Button>
+                <Button className="auth-btn" variant="outlined" onClick={handleFacebookOAuth}> 
+                    Continue with Facebook 
+                </Button>
+                <Button className="auth-btn" variant="outlined" onClick={handleGithubOAuth}> 
+                    Continue with Github 
                 </Button>
                 {error ? <div className="error-text">{errorMsg}</div> : ''}
             </Card>

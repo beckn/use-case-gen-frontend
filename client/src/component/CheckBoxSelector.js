@@ -6,10 +6,10 @@ import ConstantData from '../ConstantData';
 import Card from '@material-ui/core/Card';
 import InfoBox from './InfoBox';
 import Button from '@material-ui/core/Button';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckBoxSelector(props) {
-    let history = useHistory();
+    let history = useNavigate();
     const [state, setstate] = useContext(Context);
     console.log(props);
     const handleChange = (event, index, index2) => {

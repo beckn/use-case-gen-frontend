@@ -82,7 +82,7 @@
 
 .user-info-card {
     width: 400px;
-    height: 450px;
+    height: 550px;
     background: #edededb0!important;
     display: flex;
     flex-direction: column;
@@ -109,11 +109,7 @@
 } */
 
 .auth-btn {
-    margin: 10px;
-}
-
-.oauth2 {
-    margin: 5px;
+    margin: 20px 0;
 }
 
 /* check box */

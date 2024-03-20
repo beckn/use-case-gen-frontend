@@ -5,22 +5,33 @@ import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
 import authRoute from './routes/auth.js';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import MongoStore from 'connect-mongo';
+import logger from 'morgan';
 
 dotenv.config();
 
 const app = express();
 
-// Enable CORS for all routes
-app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: 'SECRET'
+  secret: 'keyboard cat',
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  store: new MongoStore({ mongooseConnection: mongoose.connection, mongoUrl: process.env.MONGO_URI})
 }));
 
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    credentials: true
+})); 
+
+app.use(passport.authenticate('session'));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,9 +57,6 @@ connectMongoDB();
 
 // middleware
 app.use('/api/v1/auth', authRoute);
-
-app.use(bodyParser.urlencoded({ extended: false })); 
-app.use(cookieParser());
 
 // Protected route example
 app.get('/dashboard', isAuthenticated, (req, res) => {

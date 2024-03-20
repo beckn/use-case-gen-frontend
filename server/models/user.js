@@ -5,17 +5,14 @@ import findOrCreate from "mongoose-findorcreate";
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-    // mobile: { type: Number, required: true, unique: true },
-    id: { type: String, unique: true, required: true },
-    // email: { type: String, unique: true },
-    name: { type: String, required: true },
-    // password: { type: String, required: true },
-    // role: {
-    //     type: String,
-    //     enum: [ "Retail BAP", "Retail BPP" ],
-    //     default: "Retail BPP",
-    // },
-    // organisation_name: { type: String, required: true },
+    id: { type: String },
+    user: { type: String, required: true },
+    name_role_timestamp: {
+        type: String,
+        enum: [ "Retail BAP", "Retail BPP" ]
+    },
+    name_org: { type: String },
+    agree: { type: Boolean },
 });
 
 userSchema.plugin(findOrCreate);

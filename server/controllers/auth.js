@@ -11,12 +11,13 @@ dotenv.config();
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/api/v1/auth/google/callback"
+    callbackURL: "/api/v1/auth/google/callback",
+    scope: ['profile', 'email'],
 }, (accessToken, refreshToken, profile, done) => {
     // Verify user and store information
     const user = User.findOrCreate({
         id: profile.id,
-        name: profile.displayName,
+        user: profile.displayName,
     });
 
     done(null, user);
@@ -32,7 +33,7 @@ passport.use(new FacebookStrategy({
     // Verify user and store information
     const user = User.findOrCreate({ 
         id: profile.id,
-        name: profile.displayName, 
+        user: profile.displayName, 
     });
 
     done(null, user);
@@ -42,22 +43,49 @@ passport.use(new FacebookStrategy({
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/api/v1/auth/github/callback"
+    callbackURL: "/api/v1/auth/github/callback",
+    scope: ['user:email'],
 }, (accessToken, refreshToken, profile, done) => {
     // Verify user and store information
     const user = User.findOrCreate({ 
         id: profile.id,
-        name: profile.displayName, 
+        user: profile.displayName, 
     });
 
     done(null, user);
 }));
 
-export const GoogleOAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
-export const GoogleOAuthCallback = passport.authenticate('google', { failureRedirect: '/' });
+export const GoogleOAuth = passport.authenticate('google', { scope: ['profile', 'email'] }, { session: true });
+export const GoogleOAuthCallback = passport.authenticate('google', { 
+    successRedirect: 'http://localhost:3000/search', 
+    failureRedirect: '/login/failed',
+    session: true,
+});
 
-export const FacebookOAuth = passport.authenticate('facebook');
-export const FacebookOAuthCallback = passport.authenticate('facebook', { failureRedirect: '/' });
+export const FacebookOAuth = passport.authenticate('facebook', { scope: ['email'] });
+export const FacebookOAuthCallback = passport.authenticate('facebook', { 
+    successRedirect: 'http://localhost:3000/search',
+    failureRedirect: '/' 
+});
 
-export const GitHubOAuth = passport.authenticate('github');
-export const GitHubOAuthCallback = passport.authenticate('github', { failureRedirect: '/' });
+export const GitHubOAuth = passport.authenticate('github', { scope: ['user:email'] });
+export const GitHubOAuthCallback = passport.authenticate('github', { 
+    successRedirect: 'http://localhost:3000/search',
+    failureRedirect: '/' 
+});
+
+export const Signup = async (req, res) => {
+    try {
+        const user = await User.findOrCreate({
+            user: req.body.user, 
+            name_role_timestamp: req.body.name_role_timestamp,
+            name_org: req.body.name_org,
+            agree: req.body.agree,
+        });
+
+        res.status(200).json({ success: true, message: 'User created successfully', data: user });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: 'Internal Server Error', error: error });
+    }
+};
