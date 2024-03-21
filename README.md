@@ -57,3 +57,9 @@ To run this project, you will need to add the following environment variables to
 `GITHUB_CLIENT_ID`
 
 `GITHUB_CLIENT_SECRET`
+
+
+## Screenshots
+
+![App Screenshot](src/images/frontend.png)
+

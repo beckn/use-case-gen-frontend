@@ -45,12 +45,12 @@ export default function CheckBoxSelector(props) {
 
 
     const nextClick = () => {
-        history.push(`/${ConstantData.urlPath[props.keyName].next}`);
+        history(`/${ConstantData.urlPath[props.keyName].next}`);
     }
 
     const backClick = () => {
-        history.goBack();
-
+        // history.goBack();
+        history(-1);
     }
 
     const addMore = () => {
